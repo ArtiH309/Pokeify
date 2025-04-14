@@ -10,6 +10,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 import google.generativeai as genai
 #and uvicorn is used to start the backend server
 import random #this is for the random shiny pokemon update 4/9/25
+from trainers import character_sprites # this is for the trainer sprites
 
 # .env 
 load_dotenv()
@@ -112,7 +113,11 @@ async def generate_pokemon_team(tracks: List[Track]):
         explanation_prompt = f"The following playlist has these songs: {', '.join(track_names)}. A Pokémon team was chosen for this playlist: {', '.join(pokemon_names)}. Explain why each Pokémon fits the mood and energy of this playlist BRIEFLY. Be creative but concise."
         explanation_response = model.generate_content(explanation_prompt)
         explanation_text = explanation_response.text.strip()
+
+
         
+        
+        selected_sprite = random.choice(character_sprites)
         
 
 
@@ -154,8 +159,9 @@ async def generate_pokemon_team(tracks: List[Track]):
                         })
             index += 1  # increment after every pokemon name listed or else we get ode pokemon
 
-        return {"pokemon_team": pokemon_team, "explanation": explanation_text} # we get both of the returns
+        return {"pokemon_team": pokemon_team, "explanation": explanation_text, "character_sprite": selected_sprite, "all_sprites": character_sprites} # we get both of the returns
     except Exception as e:
         return {"error": str(e)}
+    
     
     
