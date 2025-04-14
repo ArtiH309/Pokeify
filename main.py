@@ -27,7 +27,6 @@ sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
     client_secret=SPOTIFY_CLIENT_SECRET,
 ))
 
-
 app = FastAPI()
 
 #connects the frontend 
